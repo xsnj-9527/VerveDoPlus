@@ -40,8 +40,8 @@ android {
         minSdk = 26
         targetSdk = 37
         // 与上游 3.5.0 (versionCode 1243) 区分开，方便排查问题时确认到底是哪个版本
-        versionCode = 1244
-        versionName = "3.5.0-plus.1"
+        versionCode = 1245
+        versionName = "3.5.0-plus.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import cn.super12138.todo.R
@@ -25,17 +26,29 @@ object VerveDoWidget {
     const val ACTION_TOGGLE_TASK = "cn.super12138.todo.widget.ACTION_TOGGLE_TASK"
     const val EXTRA_TASK_ID = "cn.super12138.todo.widget.EXTRA_TASK_ID"
 
+    private const val TAG = "VerveDoWidget"
+
     /** 卡片最多显示的任务条数，实际条数还会按卡片当前高度收窄 */
     private const val MAX_ROWS = 5
 
     /** 不显示底部「还有 N 项」时，标题栏 + 内边距占用的高度（dp） */
-    private const val CHROME_DP = 62
+    private const val CHROME_DP = 56
 
-    /** 额外显示「还有 N 项」那一行（含上方分隔线）时需要的高度（dp） */
-    private const val CHROME_WITH_FOOTER_DP = 90
+    /**
+     * 额外显示「还有 N 项」那一行（含上方分隔线）时需要的高度（dp）。
+     * 注意它**已经包含**了底部那一行，算行数时不能再额外让出一行。
+     */
+    private const val CHROME_WITH_FOOTER_DP = 82
 
     /** 单条任务行的高度（dp），与 widget_vervedo_task.xml 的 minHeight 保持一致 */
     private const val ROW_DP = 28
+
+    /**
+     * 给上报高度留的一点余量。实测本机
+     * [AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT] 与卡片实际高度基本吻合（174dp vs 约 172dp），
+     * 所以这里只取一个很小的值兜底，避免四舍五入后最后一行被裁；取大了会白白少显示一行。
+     */
+    private const val HEIGHT_SAFETY_DP = 4
 
     /**
      * 通知所有卡片实例刷新。这里只发一条广播，开销极小，
@@ -58,21 +71,30 @@ object VerveDoWidget {
         val pendingTasks = loadPendingTasks()
 
         appWidgetIds.forEach { appWidgetId ->
-            val heightDp = appWidgetManager.getAppWidgetOptions(appWidgetId)
+            val reportedHeightDp = appWidgetManager.getAppWidgetOptions(appWidgetId)
                 .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
+            val usableHeightDp = (reportedHeightDp - HEIGHT_SAFETY_DP).coerceAtLeast(0)
 
-            // 装不下时，让出一行给底部「还有 N 项」提示
-            val capacity = rowsThatFit(heightDp, CHROME_DP)
-            val showFooter = pendingTasks.size > capacity
-            val rowLimit = if (showFooter) rowsThatFit(heightDp, CHROME_WITH_FOOTER_DP) - 1
-            else capacity
+            // 装不下时才显示底部「还有 N 项」，而这一行的高度已经算进 CHROME_WITH_FOOTER_DP，
+            // 所以这里不能再额外让出一行（早期版本重复扣减，导致 4×2 只显示 2 条）。
+            val capacityWithoutFooter = rowsThatFit(usableHeightDp, CHROME_DP)
+            val showFooter = pendingTasks.size > capacityWithoutFooter
+            val rowLimit = if (showFooter) rowsThatFit(usableHeightDp, CHROME_WITH_FOOTER_DP)
+            else capacityWithoutFooter
+
+            val visibleCount = rowLimit.coerceIn(0, MAX_ROWS)
+            Log.d(
+                TAG,
+                "widget=$appWidgetId reported=${reportedHeightDp}dp usable=${usableHeightDp}dp " +
+                        "pending=${pendingTasks.size} rows=$visibleCount footer=$showFooter"
+            )
 
             appWidgetManager.updateAppWidget(
                 appWidgetId,
                 buildViews(
                     context = context,
-                    tasks = pendingTasks.take(rowLimit.coerceIn(0, MAX_ROWS)),
-                    hiddenCount = pendingTasks.size - rowLimit.coerceIn(0, MAX_ROWS),
+                    tasks = pendingTasks.take(visibleCount),
+                    hiddenCount = pendingTasks.size - visibleCount,
                     showFooter = showFooter
                 )
             )

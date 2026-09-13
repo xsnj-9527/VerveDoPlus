@@ -23,7 +23,7 @@ Every change in this fork relative to upstream `3.5.0`:
 | 1 | **Custom text size** | New presets under Settings → Appearance → Text Size: Follow system / 80% / 85% / 90% / 95% / 100% / 110% / 120%. Implemented by overriding `LocalDensity.fontScale`, so it scales **all** text measured in sp (including hardcoded `fontSize` values), not just the theme typography |
 | 2 | **Home screen widget** | Modelled after the system Notes card: accent-coloured icon + title + circular "+" button on top, pending tasks below. Tap any row to complete it; the "+" goes straight to Tasks → Add Task. Row count adapts to the widget height (up to 5); a "N more pending" line appears when they don't all fit |
 | 3 | **App identity** | App name is `VerveDo Plus`; `applicationId` is `io.github.xsnj9527.vervedoplus` (upstream: `cn.super12138.todo`). Different package names, so **both can be installed side by side** |
-| 4 | Version numbers | `versionCode 1244` / `versionName 3.5.0-plus.1`, distinct from upstream 3.5.0 so bug reports can be triaged correctly |
+| 4 | Version numbers | `versionCode 1245` / `versionName 3.5.0-plus.2`, distinct from upstream 3.5.0 so bug reports can be triaged correctly |
 
 > [!NOTE]
 > The internal Kotlin package is still `cn.super12138.todo`. This is **intentional**: keeping the upstream package structure makes it far easier to merge upstream fixes later. What changed is the external `applicationId`, not the internal package.

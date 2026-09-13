@@ -1,1 +1,1 @@
-一个简约的、遵循 Material 3 Expressive 的待办应用。
+VerveDo 的第三方增强分支：新增自定义字号与桌面卡片。

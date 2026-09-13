@@ -14,6 +14,7 @@ import cn.super12138.todo.ui.pages.settings.components.SettingsContainer
 import cn.super12138.todo.ui.pages.settings.components.SettingsItem
 import cn.super12138.todo.ui.pages.settings.components.SwitchSettingsItem
 import cn.super12138.todo.ui.pages.settings.components.appearance.contrast.ContrastPicker
+import cn.super12138.todo.ui.pages.settings.components.appearance.fontscale.FontScalePicker
 import cn.super12138.todo.ui.pages.settings.components.appearance.palette.PalettePicker
 import com.kyant.m3color.dynamiccolor.ColorSpec
 import org.koin.compose.viewmodel.koinViewModel
@@ -79,6 +80,13 @@ fun SettingsAppearance(
             }
 
             item(key = 5) {
+                FontScalePicker(
+                    currentFontScale = uiState.fontScale,
+                    onFontScaleChange = { viewModel.setFontScale(it) }
+                )
+            }
+
+            item(key = 6) {
                 SwitchSettingsItem(
                     checked = previewColorSystem,
                     leadingIconRes = R.drawable.ic_experiment,

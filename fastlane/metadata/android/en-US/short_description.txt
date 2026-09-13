@@ -1,1 +1,1 @@
-A concise to-do app that follows Material 3 Expressive.
+A third-party fork of VerveDo adding custom text size and a home screen widget.

@@ -21,6 +21,7 @@ class DataStoreManager(val dataStore: DataStore<Preferences>) {
     private val PURE_BLACK_MODE = booleanPreferencesKey(Constants.PREF_PURE_BLACK_MODE)
     private val CONTRAST_LEVEL = floatPreferencesKey(Constants.PREF_CONTRAST_LEVEL)
     private val PREVIEW_COLOR_SYSTEM = booleanPreferencesKey(Constants.PREF_PREVIEW_COLOR_SYSTEM)
+    private val FONT_SCALE = floatPreferencesKey(Constants.PREF_FONT_SCALE)
 
     // 界面与交互
     // private val SHOW_COMPLETED = booleanPreferencesKey(Constants.PREF_SHOW_COMPLETED)
@@ -55,6 +56,10 @@ class DataStoreManager(val dataStore: DataStore<Preferences>) {
 
     val previewColorSystemFlow: Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[PREVIEW_COLOR_SYSTEM] ?: Constants.PREF_PREVIEW_COLOR_SYSTEM_DEFAULT
+    }
+
+    val fontScaleFlow: Flow<Float> = dataStore.data.map { preferences ->
+        preferences[FONT_SCALE] ?: Constants.PREF_FONT_SCALE_DEFAULT
     }
 
     /*val showCompletedFlow: Flow<Boolean> = dataStore.data.map { preferences ->
@@ -115,6 +120,12 @@ class DataStoreManager(val dataStore: DataStore<Preferences>) {
     suspend fun setPreviewColorSystem(value: Boolean) {
         dataStore.edit { preferences ->
             preferences[PREVIEW_COLOR_SYSTEM] = value
+        }
+    }
+
+    suspend fun setFontScale(value: Float) {
+        dataStore.edit { preferences ->
+            preferences[FONT_SCALE] = value
         }
     }
 

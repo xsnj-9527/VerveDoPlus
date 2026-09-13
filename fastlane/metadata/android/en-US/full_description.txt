@@ -1,1 +1,6 @@
 VerveDo is a concise to-do app that follows Material 3 Expressive. You can use it to keep track of your daily school homeworks or as a memo for everyday life. You can set priorities to each task and sort them, helping you stay organized and in control of your life.
+
+This build is VerveDo Plus, a third-party fork based on upstream 3.5.0, licensed under GPL-3.0-only. The original author is Super12138 (https://github.com/Super12138/VerveDo). Relative to upstream it adds exactly two features:
+
+1. Custom text size: Settings -> Appearance -> Text Size, with Follow system or fixed presets from 80% to 120%.
+2. A home screen widget listing pending tasks. Tap a row to complete it; the "+" button goes straight to adding a new task.

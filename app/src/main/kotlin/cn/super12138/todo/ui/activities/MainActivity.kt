@@ -1,5 +1,6 @@
 package cn.super12138.todo.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -29,6 +30,7 @@ import cn.super12138.todo.ui.components.Confetti
 import cn.super12138.todo.ui.navigation.TopLevelBackStack
 import cn.super12138.todo.ui.navigation.TopNavigation
 import cn.super12138.todo.ui.navigation.VerveDoDestinations
+import cn.super12138.todo.ui.navigation.VerveDoScreen
 import cn.super12138.todo.ui.theme.VerveDoTheme
 import cn.super12138.todo.utils.VibrationUtils
 import cn.super12138.todo.utils.configureEdgeToEdge
@@ -49,6 +51,7 @@ class MainActivity : ComponentActivity(), AndroidScopeComponent {
         super.onCreate(savedInstanceState)
 
         val backStack: TopLevelBackStack<NavKey> = get()
+        handleLaunchIntent(intent, backStack)
 
         setContent {
             val mainViewModel: MainViewModel = koinViewModel()
@@ -109,7 +112,8 @@ class MainActivity : ComponentActivity(), AndroidScopeComponent {
                 style = appearanceUiState.paletteStyle,
                 contrastLevel = appearanceUiState.contrastLevel,
                 dynamicColor = appearanceUiState.dynamicColor,
-                specVersion = specVersion
+                specVersion = specVersion,
+                fontScale = appearanceUiState.fontScale
             ) {
                 Surface(
                     color = VerveDoDefaults.Colors.Background,
@@ -162,5 +166,26 @@ class MainActivity : ComponentActivity(), AndroidScopeComponent {
                 }
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleLaunchIntent(intent, get())
+    }
+
+    /**
+     * 桌面卡片上的「+」要求直达「任务 → 添加任务」；
+     * 其余入口（卡片标题等）只把应用切到前台，不改动导航。
+     *
+     * 跳转方式与「任务」页右下角的添加按钮保持一致：先切到「任务」这个顶层页，
+     * 再在其上压入新建页，这样返回一次就停在「任务」列表。
+     */
+    private fun handleLaunchIntent(intent: Intent?, backStack: TopLevelBackStack<NavKey>) {
+        if (intent?.action != Constants.ACTION_NEW_TASK) return
+        // 消费掉该 Action，避免屏幕旋转等导致重建时重复跳转
+        intent.action = null
+        backStack.addTopLevel(VerveDoScreen.Tasks)
+        backStack.add(VerveDoScreen.Editor.Add)
     }
 }

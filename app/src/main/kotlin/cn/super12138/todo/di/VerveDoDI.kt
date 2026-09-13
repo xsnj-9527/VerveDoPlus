@@ -23,6 +23,7 @@ import cn.super12138.todo.ui.pages.settings.SettingsDataCategoryViewModel
 import cn.super12138.todo.ui.pages.settings.SettingsDataViewModel
 import cn.super12138.todo.ui.pages.settings.SettingsInterfaceInteractionViewModel
 import cn.super12138.todo.ui.pages.tasks.TaskViewModel
+import cn.super12138.todo.ui.widget.VerveDoWidget
 import cn.super12138.todo.utils.ConfettiController
 import com.jsoizo.kotlincsv.csvWriter
 import com.jsoizo.kotlincsv.writer.CsvWriter
@@ -68,7 +69,13 @@ object VerveDoDI {
                 .build()
         }
         single<TaskDao> { get<TaskDatabase>().taskDao() }
-        singleOf(::TaskRepository)
+        single {
+            TaskRepository(
+                taskDao = get(),
+                // 任务数据一变就通知桌面卡片刷新
+                onTasksChanged = { VerveDoWidget.requestRefresh(androidApplication()) }
+            )
+        }
         singleOf(::SettingsRepository)
     }
 

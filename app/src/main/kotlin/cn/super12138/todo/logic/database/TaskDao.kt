@@ -26,6 +26,13 @@ interface TaskDao {
     @Query("DELETE FROM ${Constants.DB_TABLE_NAME} WHERE id in (:taskIds)")
     suspend fun deleteFromIds(taskIds: Set<Int>)
 
+    /** 桌面卡片用：按“优先级高的靠前、其次添加先后顺序”取出未完成任务 */
+    @Query("SELECT * FROM ${Constants.DB_TABLE_NAME} WHERE completed = 0 ORDER BY priority DESC, id ASC")
+    suspend fun getPendingTasks(): List<TaskEntity>
+
+    @Query("SELECT * FROM ${Constants.DB_TABLE_NAME} WHERE id = :id LIMIT 1")
+    suspend fun getById(id: Int): TaskEntity?
+
     /*@Query("DELETE FROM todo")
     suspend fun deleteAllTodo()*/
 }

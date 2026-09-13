@@ -1,55 +1,77 @@
-![Preview of the app UI](https://s2.loli.net/2026/02/09/zUrZdykbWN68lYM.png)
+# VerveDo Plus
 
-# VerveDo
+> [!IMPORTANT]
+> **This repository is a third-party fork of [Super12138/VerveDo](https://github.com/Super12138/VerveDo) — it is NOT the official version.**
+>
+> - **Original author / copyright holder: [Super12138](https://github.com/Super12138)**
+> - **Maintainer of this fork: [xsnj-9527](https://github.com/xsnj-9527)**
+> - Based on upstream **3.5.0** (versionCode 1243), licensed under **[GPL-3.0-only](./LICENSE)**
+>
+> The design, architecture and the vast majority of the code come from the original author. This fork only contains the limited changes listed below, and is released under GPL-3.0-only as well.
+> Please report **upstream** issues to the [upstream repository](https://github.com/Super12138/VerveDo/issues). Only bugs in features added by this fork belong [here](https://github.com/xsnj-9527/VerveDoPlus/issues).
 
 A simple to-do app that follows Material 3 Expressive, using Jetpack Compose.
 
-[简体中文](https://github.com/Super12138/VerveDo/blob/main/README.md) | **English**
+[简体中文](./README.md) | **English**
 
-[![Android CI](https://github.com/Super12138/VerveDo/actions/workflows/android_ci.yml/badge.svg)](https://github.com/Super12138/VerveDo/actions/workflows/android_ci.yml)
-[![Crowdin](https://badges.crowdin.net/vervedo/localized.svg)](https://crowdin.com/project/vervedo)
-![GitHub latest release](https://img.shields.io/github/v/release/Super12138/VerveDo?style=flat-square)
-![GitHub all releases download](https://img.shields.io/github/downloads/Super12138/VerveDo/total?style=flat-square)
+## 🔀 Differences from upstream
 
-# 📦 Supported Versions
+Every change in this fork relative to upstream `3.5.0`:
 
-From `Android 8.0 (Oreo)` to `Android 17.0 (Cinnamon Bun)`
+| # | Change | Details |
+| --- | --- | --- |
+| 1 | **Custom text size** | New presets under Settings → Appearance → Text Size: Follow system / 80% / 85% / 90% / 95% / 100% / 110% / 120%. Implemented by overriding `LocalDensity.fontScale`, so it scales **all** text measured in sp (including hardcoded `fontSize` values), not just the theme typography |
+| 2 | **Home screen widget** | Modelled after the system Notes card: accent-coloured icon + title + circular "+" button on top, pending tasks below. Tap any row to complete it; the "+" goes straight to Tasks → Add Task. Row count adapts to the widget height (up to 5); a "N more pending" line appears when they don't all fit |
+| 3 | **App identity** | App name is `VerveDo Plus`; `applicationId` is `io.github.xsnj9527.vervedoplus` (upstream: `cn.super12138.todo`). Different package names, so **both can be installed side by side** |
+| 4 | Version numbers | `versionCode 1244` / `versionName 3.5.0-plus.1`, distinct from upstream 3.5.0 so bug reports can be triaged correctly |
 
-# 📃 License
+> [!NOTE]
+> The internal Kotlin package is still `cn.super12138.todo`. This is **intentional**: keeping the upstream package structure makes it far easier to merge upstream fixes later. What changed is the external `applicationId`, not the internal package.
 
-[GPL-3.0-only](https://github.com/Super12138/VerveDo/blob/main/LICENSE)
+## 📦 Supported Versions
 
-# ✨ Features
+Supports `Android 8.0 (Oreo)` through `Android 17.0 (Cinnamon Bun)`
 
-- [x] Jetpack Compose
-- [x] Material 3 **Expressive** Design
-- [x] Task Categorization
-- [x] Task Priority
-- [x] Data Backup
-- [x] Time Segmentation
-- ...
+## ⬇️ Download
 
-# ⬇️ Download
+Download the APK from [Releases](https://github.com/xsnj-9527/VerveDoPlus/releases).
 
-> [!IMPORTANT]
-> The two download channels below are the official and secure sources for VerveDo. To protect your privacy, only download the app from these links.
->
-> VerveDo can't update automatically. It is recommended to [subscribe to GitHub Release notifications](https://docs.github.com/en/account-and-profile/managing-subscriptions-and-notifications-on-github/setting-up-notifications/configuring-notifications#configuring-your-watch-settings-for-an-individual-repository) or [install F-Droid](https://f-droid.org/) to check for updates.
+> [!WARNING]
+> This fork is signed with its **own key**, which differs from both upstream and the F-Droid build.
+> If you already have upstream VerveDo installed, you must uninstall it first (or export a backup via Settings → Data → Backup, then restore it afterwards).
+> Since the `applicationId` also differs, the two versions can actually coexist with independent data.
 
-[From Github Release](https://github.com/Super12138/VerveDo/releases/) or get it from [F-Droid](https://f-droid.org/packages/cn.super12138.todo)
-[<img src="./art/get-it-on-fdroid.png" height="100" />](https://f-droid.org/packages/cn.super12138.todo)
+## 🔨 Building
 
-# 📸 Screenshots
+```bash
+git clone https://github.com/xsnj-9527/VerveDoPlus.git
+cd VerveDoPlus
+./gradlew assembleRelease
+```
 
-| ![Overview page (Light)](https://s2.loli.net/2026/02/09/p7L3vcZ4KnOHdol.png) | ![Overview page (Dark)](https://s2.loli.net/2026/02/09/gU9x3lpYvJXLfDs.png) |
-| ---------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Overview page (Light)                                                        | Overview page (Dark)                                                        |
-| ![Task list](https://s2.loli.net/2026/02/09/klB2e4XRYI98zdG.png)             | ![Add new task](https://s2.loli.net/2026/02/09/KXEGDWc1lfSRyCP.png)         |
-| Task list                                                                    | Add new task                                                                |
+Requires **JDK 21** and the Android SDK (compileSdk 37).
 
-## 🤝 Contributing
-You can contribute to VerveDo by submitting code or translations. To contribute code, simply submit a Pull Request. To contribute translations, please [join the Crowdin project](https://crowdin.com/project/vervedo). If you want to propose a new language, please submit an Issue.
+If no signing config is provided, release builds fall back to the debug key. To use your own key, supply it via `gradle.properties` or the command line:
 
-<a href="https://crowdin.com/project/vervedo">
-    <img style="width:140; height:40px" src="./art/localization-at-white-rounded-bordered@1x.png" srcset="./art/localization-at-white-rounded-bordered@1x.png 1x,./art/localization-at-white-rounded-bordered@2x.png 2x" alt="VerveDo Crowdin Project" />
-</a>
+```
+releaseStoreFile=/path/to/your.jks
+releaseStorePassword=...
+releaseKeyAlias=...
+releaseKeyPassword=...
+```
+
+## 📃 License
+
+[GPL-3.0-only](./LICENSE)
+
+As a derivative work of a GPL-3.0 project:
+
+- The original copyright notices and the `LICENSE` file are kept intact and unmodified;
+- This fork is likewise released under GPL-3.0-only and **cannot** be relicensed;
+- The complete source of this fork is this repository, satisfying GPL-3.0 §6 ("Conveying Non-Source Forms");
+- Any further redistribution of this fork must also comply with GPL-3.0.
+
+## 🙏 Credits
+
+- Upstream project: [Super12138/VerveDo](https://github.com/Super12138/VerveDo)
+- The excellent open-source libraries used by upstream are listed in-app under Settings → About → Licences

@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">#0061A4</color>
+
+    <!-- 桌面卡片配色（浅色）。深色版本见 values-night/colors.xml，
+         两者由系统深色模式自动切换，卡片会跟随系统外观。 -->
+    <color name="widget_card_background">#F2FFFFFF</color>
+    <color name="widget_text_primary">#DE000000</color>
+    <color name="widget_text_secondary">#99000000</color>
+    <color name="widget_divider">#1F000000</color>
+    <color name="widget_accent">#0061A4</color>
+    <color name="widget_on_accent">#FFFFFFFF</color>
 </resources>

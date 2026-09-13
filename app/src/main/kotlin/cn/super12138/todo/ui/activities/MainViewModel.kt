@@ -19,7 +19,8 @@ class MainViewModel(
     val hapticFeedbackFlow = settingsRepository.hapticFeedbackFlow
     val previewColorSystemFlow = settingsRepository.previewColorSystemFlow
 
-    val appearanceUiState: StateFlow<SettingsAppearanceUiState> = combine(
+    // combine 的具名重载最多只到 5 个流，所以分两段合并
+    private val appearanceBaseFlow = combine(
         settingsRepository.dynamicColorFlow,
         settingsRepository.paletteStyleFlow,
         settingsRepository.darkModeFlow,
@@ -33,6 +34,13 @@ class MainViewModel(
             pureBlackMode = pureBlackMode,
             contrastLevel = contrastLevel
         )
+    }
+
+    val appearanceUiState: StateFlow<SettingsAppearanceUiState> = combine(
+        appearanceBaseFlow,
+        settingsRepository.fontScaleFlow
+    ) { uiState, fontScale ->
+        uiState.copy(fontScale = fontScale)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

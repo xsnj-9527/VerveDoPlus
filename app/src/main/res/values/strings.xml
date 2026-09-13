@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">VerveDo</string>
+    <string name="app_name" translatable="false">VerveDo Plus</string>
     <string name="page_settings">Settings</string>
     <string name="action_add_task">Add Task</string>
     <string name="tip_no_task">There are no tasks to complete at the moment.\nTake a good rest!</string>
@@ -25,7 +25,7 @@
     <string name="action_back">Back</string>
     <string name="pref_about">About</string>
     <string name="pref_about_desc">About this app</string>
-    <string name="developer_name" translatable="false">Super12138</string>
+    <string name="developer_name" translatable="false">xsnj-9527</string>
     <string name="pref_app_version">Version</string>
     <string name="pref_developer">Developer</string>
     <string name="pref_licence">Open Source Licences</string>
@@ -64,6 +64,16 @@
     <string name="contrast_default">Default</string>
     <string name="contrast_high">High</string>
     <string name="contrast_very_high">Very High</string>
+    <string name="pref_font_scale">Text Size</string>
+    <string name="pref_font_scale_desc">Adjust the text size inside the app, or follow the system setting</string>
+    <string name="font_scale_follow_system">Follow System</string>
+    <string name="font_scale_80" translatable="false">80%</string>
+    <string name="font_scale_85" translatable="false">85%</string>
+    <string name="font_scale_90" translatable="false">90%</string>
+    <string name="font_scale_95" translatable="false">95%</string>
+    <string name="font_scale_100" translatable="false">100%</string>
+    <string name="font_scale_110" translatable="false">110%</string>
+    <string name="font_scale_120" translatable="false">120%</string>
     <string name="pref_interface_interaction">Interface &amp; Interaction</string>
     <string name="pref_interface_interaction_desc">Task List, Haptic Feedback</string>
     <string name="pref_category_todo_list">Task List</string>
@@ -147,12 +157,21 @@
     <string name="label_none">None</string>
     <string name="time_next_week">Next Week</string>
     <string name="label_basic_information">Basic Information</string>
-    <string name="pref_assist_in_translation">Assist in Translation</string>
-    <string name="pref_assist_in_translation_desc">Help us translate VerveDo into your language</string>
+    <string name="pref_upstream">Upstream Project</string>
+    <string name="pref_upstream_desc">This app is based on Super12138/VerveDo (GPL-3.0)</string>
     <string name="pref_preview_color_system">Preview New Color System</string>
     <string name="pref_preview_color_system_desc">Using color specification Spec2025 which support Material 3 Expressive (Experimental)</string>
     <string name="pref_export_task">Export task to file</string>
     <string name="pref_export_task_desc">Export all task to a single file (support .csv file currently)</string>
     <string name="tip_export_success">Export successful</string>
     <string name="tip_export_failed">Export failed</string>
+
+    <!-- Home screen widget -->
+    <string name="widget_title">All Tasks</string>
+    <string name="widget_empty">Nothing left to do</string>
+    <string name="widget_description">Shows your pending tasks. Tap one to mark it complete.</string>
+    <string name="widget_pending">%1$d pending</string>
+    <string name="widget_more">%1$d more pending</string>
+    <string name="widget_preview_task">Sample task</string>
+    <string name="widget_preview_footer">2 more pending</string>
 </resources>

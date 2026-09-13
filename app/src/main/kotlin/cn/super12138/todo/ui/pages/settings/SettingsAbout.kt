@@ -90,10 +90,10 @@ fun SettingsAbout(
             }
             item(key = 4) {
                 SettingsItem(
-                    leadingIconRes = R.drawable.ic_translate,
-                    title = stringResource(R.string.pref_assist_in_translation),
-                    description = stringResource(R.string.pref_assist_in_translation_desc),
-                    onClick = { uriHandler.openUri(Constants.CROWDIN_PROJECT) }
+                    leadingIconRes = R.drawable.ic_dns,
+                    title = stringResource(R.string.pref_upstream),
+                    description = stringResource(R.string.pref_upstream_desc),
+                    onClick = { uriHandler.openUri(Constants.UPSTREAM_REPO) }
                 )
             }
             item(key = 5) {

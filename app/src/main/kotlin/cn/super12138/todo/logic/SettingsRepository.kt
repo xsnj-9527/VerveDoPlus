@@ -3,6 +3,7 @@ package cn.super12138.todo.logic
 import cn.super12138.todo.logic.datastore.DataStoreManager
 import cn.super12138.todo.logic.model.ContrastLevel
 import cn.super12138.todo.logic.model.DarkMode
+import cn.super12138.todo.logic.model.FontScale
 import cn.super12138.todo.logic.model.PaletteStyle
 import cn.super12138.todo.logic.model.SortingMethod
 import kotlinx.coroutines.flow.map
@@ -14,6 +15,7 @@ class SettingsRepository(private val dataStoreManager: DataStoreManager) {
     val pureBlackFlow = dataStoreManager.pureBlackFlow
     val contrastLevelFlow = dataStoreManager.contrastLevelFlow.map { ContrastLevel.fromFloat(it) }
     val previewColorSystemFlow = dataStoreManager.previewColorSystemFlow
+    val fontScaleFlow = dataStoreManager.fontScaleFlow.map { FontScale.fromFloat(it) }
     val sortingMethodFlow = dataStoreManager.sortingMethodFlow.map { SortingMethod.fromId(it) }
     val textFieldAutoFocusFlow = dataStoreManager.textFieldAutoFocusFlow
     val secureModeFlow = dataStoreManager.secureModeFlow
@@ -27,6 +29,8 @@ class SettingsRepository(private val dataStoreManager: DataStoreManager) {
     suspend fun setContrastLevel(value: Float) = dataStoreManager.setContrastLevel(value)
     suspend fun setPreviewColorSystem(value: Boolean) =
         dataStoreManager.setPreviewColorSystem(value)
+
+    suspend fun setFontScale(value: Float) = dataStoreManager.setFontScale(value)
 
     suspend fun setSortingMethod(value: Int) = dataStoreManager.setSortingMethod(value)
     suspend fun setTextFieldAutoFocus(value: Boolean) =

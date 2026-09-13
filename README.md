@@ -1,57 +1,75 @@
-![应用界面一览](https://s2.loli.net/2026/02/09/EJS1HLOAvKyaRsl.png)
+# VerveDo Plus
 
-# VerveDo
+> [!IMPORTANT]
+> **本仓库是 [Super12138/VerveDo](https://github.com/Super12138/VerveDo) 的第三方衍生版本（fork），不是官方版本。**
+>
+> - **原作者 / 版权所有者：[Super12138](https://github.com/Super12138)**
+> - **本分支维护者：[xsnj-9527](https://github.com/xsnj-9527)**
+> - 本分支基于上游 **3.5.0**（versionCode 1243）修改，遵循 **[GPL-3.0-only](./LICENSE)**
+>
+> 应用的设计、架构与绝大部分代码均出自原作者。本分支只做了下方列出的有限改动，并同样以 GPL-3.0-only 发布。
+> 遇到**上游本身**的问题请反馈给[上游仓库](https://github.com/Super12138/VerveDo/issues)；只有本分支新增功能的 bug 才请提到[这里](https://github.com/xsnj-9527/VerveDoPlus/issues)。
 
-一个简单的、遵循 Material 3 Expressive 的待办应用，使用 Jetpack Compose 编写
+一个简单的、遵循 Material 3 Expressive 的待办应用，使用 Jetpack Compose 编写。
 
-**简体中文** | [English](https://github.com/Super12138/VerveDo/blob/main/README_EN.md)
+## 🔀 与上游的差异
 
-[![Android CI](https://github.com/Super12138/VerveDo/actions/workflows/android_ci.yml/badge.svg)](https://github.com/Super12138/VerveDo/actions/workflows/android_ci.yml)
-[![Crowdin](https://badges.crowdin.net/vervedo/localized.svg)](https://crowdin.com/project/vervedo)
-![GitHub Release 最新版本](https://img.shields.io/github/v/release/Super12138/VerveDo?style=flat-square)
-![GitHub Release 总下载数](https://img.shields.io/github/downloads/Super12138/VerveDo/total?style=flat-square)
+本分支相对于上游 `3.5.0` 的全部改动：
+
+| # | 改动 | 说明 |
+| --- | --- | --- |
+| 1 | **自定义字号** | 「设置 → 外观和个性化 → 字体大小」新增档位：跟随系统 / 80% / 85% / 90% / 95% / 100% / 110% / 120%。通过覆写 `LocalDensity.fontScale` 实现，因此对**所有**以 sp 计量的文字生效（含代码中写死 `fontSize` 的地方），而不只是主题排版 |
+| 2 | **桌面卡片（小组件）** | 形态参考系统「便签」卡片：顶部强调色图标 + 标题 + 圆形「+」，下方列出未完成任务。点任意一条即可勾选完成；右上角「+」直接进入「任务 → 添加任务」；条数按卡片高度自适应（最多 5 条），装不下时底部显示「还有 N 项未完成」 |
+| 3 | **应用标识** | 应用名 `VerveDo Plus`；`applicationId` 为 `io.github.xsnj9527.vervedoplus`（上游为 `cn.super12138.todo`）。两者包名不同，**可以与上游版本共存** |
+| 4 | 版本号 | `versionCode 1244` / `versionName 3.5.0-plus.1`，与上游 3.5.0 区分，便于排查问题时确认版本 |
+
+> [!NOTE]
+> 内部 Kotlin 包名仍保留 `cn.super12138.todo`。这是**有意为之**：保留上游包结构可以显著降低后续跟进上游修复时的合并成本。改变的是对外的 `applicationId`，不是内部包名。
 
 ## 📦 版本支持
 
 支持 `Android 8.0 (Oreo)` 至 `Android 17.0 (Cinnamon Bun)`
 
-## 📃 许可证
-
-[GPL-3.0-only](https://github.com/Super12138/VerveDo/blob/main/LICENSE)
-
-## ✨ 功能
-
-- [x] Jetpack Compose
-- [x] Material 3 **Expressive** 设计
-- [x] 任务分类
-- [x] 任务优先级
-- [x] 数据备份
-- [x] 时间划分功能
-- ...
-
 ## ⬇️ 下载
 
-> [!IMPORTANT]
-> 下方两个渠道是官方认定的安全渠道，请从这两个渠道下载待办以保证个人隐私不被侵犯。
->
-> 待办不会自动更新，建议[订阅 GitHub Release 发行通知](https://docs.github.com/zh/account-and-profile/managing-subscriptions-and-notifications-on-github/setting-up-notifications/configuring-notifications#configuring-your-watch-settings-for-an-individual-repository)或者[安装 F-Droid](https://f-droid.org/) 检查更新
+请从 [Releases](https://github.com/xsnj-9527/VerveDoPlus/releases) 下载 APK。
 
-[前往 GitHub Release](https://github.com/Super12138/VerveDo/releases/)或者[从 F-Droid 上下载](https://f-droid.org/packages/cn.super12138.todo)
+> [!WARNING]
+> 本分支使用**自己的签名密钥**，与上游版本、以及 F-Droid 上的版本签名均不同。
+> 如果你已经安装了上游 VerveDo，安装本分支前必须先卸载（或先用应用内「设置 → 数据 → 备份数据」导出，装好后再恢复）。
+> 由于 `applicationId` 也不同，两个版本实际上可以同时安装、各自独立保存数据。
 
-[<img src="./art/get-it-on-fdroid-zh-cn.png" height="100" />](https://f-droid.org/packages/cn.super12138.todo)
+## 🔨 构建
 
-## 📸 截图
+```bash
+git clone https://github.com/xsnj-9527/VerveDoPlus.git
+cd VerveDoPlus
+./gradlew assembleRelease
+```
 
-| ![概览界面（浅色）](https://s2.loli.net/2026/02/09/nhuMmF8L7Oqk4dp.png) | ![概览界面（深色）](https://s2.loli.net/2026/02/09/Oari6zwC14gLPNl.png) |
-| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| 概览界面（浅色）                                                        | 概览界面（深色）                                                        |
-| ![待办列表](https://s2.loli.net/2026/02/09/LbqGhyJXjke2gZ3.png)         | ![添加待办](https://s2.loli.net/2026/02/09/Da3h29rxFMmJQiV.png)         |
-| 待办列表                                                                | 添加待办                                                                |
+需要 **JDK 21** 与 Android SDK（compileSdk 37）。
 
-## 🤝 贡献
-你可以为 VerveDo 贡献代码和翻译。
-贡献代码只需提交 Pull Request 即可，贡献翻译请[加入 Crowdin 项目](https://crowdin.com/project/vervedo)。若需提出新语言，请提交 Issue。
+Release 构建若未提供签名配置，会回退到 debug 签名。要使用自己的密钥，在 `gradle.properties` 或命令行提供：
 
-<a href="https://crowdin.com/project/vervedo">
-    <img style="width:140; height:40px" src="./art/localization-at-white-rounded-bordered@1x.png" srcset="./art/localization-at-white-rounded-bordered@1x.png 1x,./art/localization-at-white-rounded-bordered@2x.png 2x" alt="VerveDo Crowdin 项目" />
-</a>
+```
+releaseStoreFile=/path/to/your.jks
+releaseStorePassword=...
+releaseKeyAlias=...
+releaseKeyPassword=...
+```
+
+## 📃 许可证
+
+[GPL-3.0-only](./LICENSE)
+
+本分支是 GPL-3.0 的衍生作品，因此：
+
+- 原始版权声明与 `LICENSE` 文件完整保留，未作改动；
+- 本分支同样以 GPL-3.0-only 发布，**不可**改用其他许可证；
+- 本分支的完整源码即本仓库，符合 GPL-3.0 §6 关于「分发目标代码时须提供对应源码」的要求；
+- 任何再次分发本分支的行为，同样需要遵守 GPL-3.0。
+
+## 🙏 致谢
+
+- 上游项目：[Super12138/VerveDo](https://github.com/Super12138/VerveDo)
+- 上游所使用的优秀开源库，可在应用内「设置 → 关于 → 开源许可」中查看

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cn.super12138.todo.logic.SettingsRepository
 import cn.super12138.todo.logic.model.ContrastLevel
+import cn.super12138.todo.logic.model.FontScale
 import cn.super12138.todo.logic.model.PaletteStyle
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -13,8 +14,8 @@ import kotlinx.coroutines.launch
 
 class SettingsAppearanceViewModel(private val settingsRepository: SettingsRepository) :
     ViewModel() {
-    // 把整体Ui状态流拆成3个小流以保证类型安全
-    val appearanceUiState: StateFlow<SettingsAppearanceUiState> = combine(
+    // 把整体Ui状态流拆成2段以保证类型安全（combine 的具名重载最多只到 5 个流）
+    private val appearanceBaseFlow = combine(
         settingsRepository.dynamicColorFlow,
         settingsRepository.paletteStyleFlow,
         settingsRepository.darkModeFlow,
@@ -28,6 +29,13 @@ class SettingsAppearanceViewModel(private val settingsRepository: SettingsReposi
             pureBlackMode = pureBlackMode,
             contrastLevel = contrastLevel
         )
+    }
+
+    val appearanceUiState: StateFlow<SettingsAppearanceUiState> = combine(
+        appearanceBaseFlow,
+        settingsRepository.fontScaleFlow
+    ) { uiState, fontScale ->
+        uiState.copy(fontScale = fontScale)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -70,6 +78,12 @@ class SettingsAppearanceViewModel(private val settingsRepository: SettingsReposi
     fun setPreviewColorSystem(value: Boolean) {
         viewModelScope.launch {
             settingsRepository.setPreviewColorSystem(value)
+        }
+    }
+
+    fun setFontScale(fontScale: FontScale) {
+        viewModelScope.launch {
+            settingsRepository.setFontScale(fontScale.value)
         }
     }
 }

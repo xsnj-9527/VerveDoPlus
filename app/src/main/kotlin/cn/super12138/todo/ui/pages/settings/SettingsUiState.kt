@@ -3,6 +3,7 @@ package cn.super12138.todo.ui.pages.settings
 import cn.super12138.todo.constants.Constants
 import cn.super12138.todo.logic.model.ContrastLevel
 import cn.super12138.todo.logic.model.DarkMode
+import cn.super12138.todo.logic.model.FontScale
 import cn.super12138.todo.logic.model.PaletteStyle
 import cn.super12138.todo.logic.model.SortingMethod
 
@@ -12,6 +13,7 @@ data class SettingsAppearanceUiState(
     val darkMode: DarkMode = DarkMode.FollowSystem,
     val pureBlackMode: Boolean = Constants.PREF_PURE_BLACK_MODE_DEFAULT,
     val contrastLevel: ContrastLevel = ContrastLevel.Default,
+    val fontScale: FontScale = FontScale.FollowSystem,
     val previewColorSystem: Boolean = Constants.PREF_PREVIEW_COLOR_SYSTEM_DEFAULT
 )
 

@@ -2,12 +2,20 @@ package cn.super12138.todo.constants
 
 object Constants {
     const val TAG = "VerveDo"
-    const val DEVELOPER_GITHUB = "https://github.com/Super12138/"
-    const val GITHUB_REPO = "https://github.com/Super12138/VerveDo/"
-    const val CROWDIN_PROJECT = "https://crowdin.com/project/vervedo/"
+    const val DEVELOPER_GITHUB = "https://github.com/xsnj-9527/"
+    const val GITHUB_REPO = "https://github.com/xsnj-9527/VerveDoPlus/"
+
+    /**
+     * 上游项目。本应用是 Super12138/VerveDo 的 GPL-3.0 衍生版本，
+     * 「关于」页保留一个入口指向它，明确标注来源。
+     */
+    const val UPSTREAM_REPO = "https://github.com/Super12138/VerveDo/"
 
     const val KEY_TODO_FAB_TRANSITION = "todo_fab"
     const val KEY_TODO_ITEM_TRANSITION = "todo_item_id"
+
+    /** 桌面卡片「+」的 Action：把应用拉到前台并直接进入「任务 → 添加任务」 */
+    const val ACTION_NEW_TASK = "cn.super12138.todo.action.NEW_TASK"
 
     const val DB_NAME = "todo"
     const val DB_TABLE_NAME = "todo"
@@ -28,6 +36,9 @@ object Constants {
 
     const val PREF_CONTRAST_LEVEL = "contrast_level"
     const val PREF_CONTRAST_LEVEL_DEFAULT = 0f // Normal
+
+    const val PREF_FONT_SCALE = "font_scale"
+    const val PREF_FONT_SCALE_DEFAULT = -1f // Follow System
 
     const val PREF_PREVIEW_COLOR_SYSTEM = "preview_color_system"
     const val PREF_PREVIEW_COLOR_SYSTEM_DEFAULT = false

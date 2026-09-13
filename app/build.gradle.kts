@@ -36,15 +36,16 @@ android {
     }
 
     defaultConfig {
-        applicationId = "cn.super12138.todo"
+        applicationId = "io.github.xsnj9527.vervedoplus"
         minSdk = 26
         targetSdk = 37
-        versionCode = 1243
-        versionName = "3.5.0"
+        // 与上游 3.5.0 (versionCode 1243) 区分开，方便排查问题时确认到底是哪个版本
+        versionCode = 1244
+        versionName = "3.5.0-plus.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        base.archivesName.set("vervedo-${versionName}")
+        base.archivesName.set("vervedoplus-${versionName}")
     }
 
     buildTypes {
